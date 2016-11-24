@@ -1,15 +1,18 @@
 package sample;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -31,7 +34,8 @@ public class Main extends Application {
         options.addArguments("--start-maximized");
         WebDriver driver = new ChromeDriver(options);
         driver.get("http://www.pccomponentes.com");
-        searchPCComponentes(driver);
+        //searchPCComponentes(driver);
+        chrome(driver);
         //driver.quit();
         launch(args);
     }
@@ -45,7 +49,7 @@ public class Main extends Application {
         aux.click();
     }
 
-    public static void chrome(){
+    public static void chrome(WebDriver driver){
         // Paso 1 introducir la cadena de búsqueda
         String searchText="Móviles\n";
         WebElement searchInputBox=driver.findElement(By.name("query"));
