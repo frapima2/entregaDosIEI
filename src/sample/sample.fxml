@@ -1,8 +1,23 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="sample.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="202.0" prefWidth="499.0" text="Buscar telefonos" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="305.0" prefWidth="543.0">
+         <children>
+            <Label layoutX="66.0" layoutY="44.0" text="Marca de telefono" />
+            <Label layoutX="66.0" layoutY="90.0" text="Buscar y comprar en" />
+            <ComboBox layoutX="179.0" layoutY="40.0" prefHeight="25.0" prefWidth="157.0" promptText="seleccione una marca" />
+            <RadioButton layoutX="179.0" layoutY="90.0" mnemonicParsing="false" text="PCComponentes" />
+            <RadioButton layoutX="179.0" layoutY="119.0" mnemonicParsing="false" text="Fnac" />
+            <Button layoutX="380.0" layoutY="40.0" mnemonicParsing="false" text="Buscar" />
+            <Button layoutX="431.0" layoutY="136.0" mnemonicParsing="false" text="Cerrar" />
+         </children></AnchorPane>
+  </content>
+</TitledPane>
