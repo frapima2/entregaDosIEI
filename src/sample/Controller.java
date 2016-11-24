@@ -16,7 +16,7 @@ public class Controller {
 
 
 
-    public static void chrome(WebDriver driver){
+    public static void chrome(){
 
         String exePath = "C:\\Users\\Javi\\Desktop\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", exePath);
