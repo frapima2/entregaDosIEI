@@ -6,14 +6,14 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.TitledPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="239.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="239.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Label layoutX="38.0" layoutY="67.0" text="Marca de telefono" />
       <Label layoutX="38.0" layoutY="154.0" text="Buscar en" />
-      <ComboBox layoutX="150.0" layoutY="63.0" prefHeight="25.0" prefWidth="161.0" promptText="seleccione una marca" visibleRowCount="8" />
-      <RadioButton layoutX="150.0" layoutY="154.0" mnemonicParsing="false" text="PCComponentes" />
-      <RadioButton layoutX="150.0" layoutY="183.0" mnemonicParsing="false" text="FNAC" />
-      <Button layoutX="379.0" layoutY="63.0" mnemonicParsing="false" text="Buscar" />
-      <Button layoutX="380.0" layoutY="200.0" mnemonicParsing="false" text="Cerrar" />
+      <ComboBox fx:id="comboBox" layoutX="150.0" layoutY="63.0" onShown="#rellenarCb" prefHeight="25.0" prefWidth="161.0" promptText="seleccione una marca" />
+      <RadioButton fx:id="pc" layoutX="150.0" layoutY="154.0" mnemonicParsing="false" text="PCComponentes" />
+      <RadioButton fx:id="fnac" layoutX="150.0" layoutY="183.0" mnemonicParsing="false" text="FNAC" />
+      <Button fx:id="buscar" layoutX="379.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#buscar" text="Buscar" />
+      <Button fx:id="cerrar" layoutX="380.0" layoutY="200.0" mnemonicParsing="false" text="Cerrar" />
    </children>
 </Pane>

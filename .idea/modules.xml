@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/entregaDosIEI.iml" filepath="$PROJECT_DIR$/.idea/entregaDosIEI.iml" />
       <module fileurl="file://$PROJECT_DIR$/entregaDosIEI.iml" filepath="$PROJECT_DIR$/entregaDosIEI.iml" />
     </modules>
   </component>
