@@ -51,7 +51,8 @@ public class Controller {
     private CheckBox pc, fn;
 
     String marca;
-    ToggleGroup group = new ToggleGroup();
+
+    ObservableList<Producto> vacia = FXCollections.observableArrayList();
 
     public void llenarTabla(){
         c_marca.setCellValueFactory(param -> new
@@ -81,7 +82,14 @@ public class Controller {
 
     }
 
+    public void vaciar(){
+        ObservableList<Producto> vacia = FXCollections.observableArrayList();
+        resultados.setItems(vacia);
+        rellenarCb();
+    }
+
     public void buscar(){
+        vaciar();
         if(pc.isSelected()){buscarPc(); System.out.println("Hecho");}
         //if(fn.isSelected()){ buscarFn();System.out.println("Hecho");}
 
@@ -92,7 +100,7 @@ public class Controller {
         String exePath = "C:\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", exePath);
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--start-maximized");
+        options.addArguments("--start-minimized");
         WebDriver driver = new ChromeDriver(options);
 
         marca = comboBox.getValue().toString();
@@ -119,7 +127,7 @@ public class Controller {
 
         //Paso 4 Cerrar la ventana de cookies
         driver.findElement(By.xpath("//*[@id=\'familia-secundaria\']/div[5]/div/div/div[2]/button")).click();
-        System.out.println("Popup Cookies cerrado");
+        //System.out.println("Popup Cookies cerrado");
 
         try {
             Thread.sleep(2000);
@@ -156,7 +164,7 @@ public class Controller {
         ArrayList<WebElement> resultados2= (ArrayList<WebElement>)
                 driver.findElements(By.xpath("//*[contains(@class,'GTM-productClick enlace-superpuesto')]"));
         System.out.println("Resultados " + resultados2.size());
-        System.out.println("Paso 8 pasado");
+        //System.out.println("Paso 8 pasado");
         String modelo;
         String precio;
 
@@ -164,13 +172,9 @@ public class Controller {
         WebElement actual_Elemento, navegacion2;
         for (int i=0; i< resultados2.size(); i++) {
             actual_Elemento = resultados2.get(i); // elemento actual de la lista.
-            System.out.println("Elemento: " + i);
             modelo = actual_Elemento.getAttribute("data-name").toString();
             precio = actual_Elemento.getAttribute("data-price").toString();
-            System.out.println("Nombre: " + actual_Elemento.getAttribute("data-name").toString());
-            System.out.println("Precio: " + actual_Elemento.getAttribute("data-price").toString() );
             resultados.getItems().add(new Producto(marca,modelo,precio,web));
-            System.out.println("-------------------------------------------");
         }
 
         llenarTabla();
