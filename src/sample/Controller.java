@@ -182,6 +182,7 @@ public class Controller {
     }
 
     public void buscarFn(){
+        marca = comboBox.getValue().toString();
         String web = "Fnac";
         String exePath = "src\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", exePath);
@@ -196,7 +197,44 @@ public class Controller {
         aux = driver.findElement(By.xpath("//a[@href='http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-LG/n39894']/a"));
         aux.click();
 
-        marca = comboBox.getValue().toString();
+        WebElement next = driver.findElement(By.xpath("/html/body/div[4]/div/div[3]/div[2]/span[2]/ul/li[3]/a"));
+        ArrayList<WebElement> elementos = (ArrayList<WebElement>) driver.findElements(By.className("Article-item"));
+        while(next.isDisplayed()){
+            next.click();
+            try{
+                waitForAjax(driver);
+            }
+            catch (InterruptedException i){
+                System.out.print("ERROR DE CONEXION");
+            }
+            elementos.addAll(driver.findElements(By.className("Article-item")));
+        }
 
+        String nombre;
+        String precio;
+
+        for(int i=0; i<elementos.size(); i++){
+            nombre = elementos.get(i).findElement(By.xpath(".//div[1]/div[2]/div[1]/p[1]/a[1]")).getText();
+            precio = elementos.get(i).findElement(By.xpath(".//div[1]/div[3]/div[1]/div[2]/div[1]/div[1]/a[1]")).getText() + elementos.get(i).findElement(By.xpath(".//div[1]/div[3]/div[1]/div[2]/div[1]/div[1]/a[1]/sup[1]")).getText();
+            resultados.getItems().add(new Producto(marca, nombre, precio, web));
+        }
+
+        driver.quit();
+
+        llenarTabla();
+
+
+    }
+
+    public static void waitForAjax(WebDriver driver) throws InterruptedException
+    {
+        while (true)
+        { Boolean ajaxIsComplete = (Boolean)
+                ((JavascriptExecutor)driver).executeScript("return jQuery.active == 0");
+            if (ajaxIsComplete){
+                break;
+            }
+            Thread.sleep(100);
+        }
     }
 }
