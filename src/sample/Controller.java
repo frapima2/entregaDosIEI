@@ -89,7 +89,7 @@ public class Controller {
 
     public void buscarPc(){
         String web = "PCComponentes";
-        String exePath = "C:\\chromedriver.exe";
+        String exePath = "src\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", exePath);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
@@ -178,6 +178,21 @@ public class Controller {
     }
 
     public void buscarFn(){
+        String web = "Fnac";
+        String exePath = "src\\chromedriver.exe";
+        System.setProperty("webdriver.chrome.driver", exePath);
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        WebDriver driver = new ChromeDriver(options);
+
+        WebElement aux = driver.findElement(By.xpath("//a[@href='http://www.fnac.es/telefono-MP3-GPS#bl=MMSmartphone']/a"));
+        aux.click();
+        aux = driver.findElement(By.xpath("//a[@href='http://www.fnac.es/telefono-MP3-GPS/Smartphones-Libres/s39887']/a"));
+        aux.click();
+        aux = driver.findElement(By.xpath("//a[@href='http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-LG/n39894']/a"));
+        aux.click();
+
+        marca = comboBox.getValue().toString();
 
     }
 }

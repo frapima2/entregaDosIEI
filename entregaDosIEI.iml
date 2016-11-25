@@ -18,5 +18,6 @@
         <jarDirectory url="file://D:/Documentos/Librerias/Selenium Java/lib" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="cglib-nodep-3.2.4" level="project" />
   </component>
 </module>
