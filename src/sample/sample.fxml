@@ -6,14 +6,22 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.TitledPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="239.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <Label layoutX="38.0" layoutY="67.0" text="Marca de telefono" />
-      <Label layoutX="38.0" layoutY="154.0" text="Buscar en" />
-      <ComboBox fx:id="comboBox" layoutX="150.0" layoutY="63.0" onShown="#rellenarCb" prefHeight="25.0" prefWidth="161.0" promptText="seleccione una marca" />
-      <RadioButton fx:id="pc" layoutX="150.0" layoutY="154.0" mnemonicParsing="false" text="PCComponentes" />
-      <RadioButton fx:id="fnac" layoutX="150.0" layoutY="183.0" mnemonicParsing="false" text="FNAC" />
-      <Button fx:id="buscar" layoutX="379.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#buscar" text="Buscar" />
-      <Button fx:id="cerrar" layoutX="380.0" layoutY="200.0" mnemonicParsing="false" text="Cerrar" />
+      <Label layoutX="14.0" layoutY="18.0" text="Marca de telefono" />
+      <Label layoutX="14.0" layoutY="56.0" text="Buscar en" />
+      <ComboBox fx:id="comboBox" layoutX="126.0" layoutY="14.0" onShown="#rellenarCb" prefHeight="25.0" prefWidth="161.0" promptText="seleccione una marca" />
+      <Button fx:id="buscar" layoutX="355.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#buscar" text="Buscar" />
+      <Button fx:id="cerrar" layoutX="553.0" layoutY="474.0" mnemonicParsing="false" text="Cerrar" />
+      <TableView fx:id="resultados" layoutX="15.0" layoutY="123.0" prefHeight="339.0" prefWidth="585.0">
+        <columns>
+          <TableColumn fx:id="c_marca" prefWidth="98.0" text="Marca" />
+          <TableColumn fx:id="c_modelo" prefWidth="338.0" text="Modelo" />
+            <TableColumn fx:id="c_precio" minWidth="0.0" prefWidth="48.0" text="Precio" />
+            <TableColumn fx:id="c_web" prefWidth="100.0" text="Web" />
+        </columns>
+      </TableView>
+      <CheckBox fx:id="pc" layoutX="126.0" layoutY="56.0" mnemonicParsing="false" text="PCComponentes" />
+      <CheckBox fx:id="fnac" layoutX="126.0" layoutY="89.0" mnemonicParsing="false" text="Fnac" />
    </children>
 </Pane>

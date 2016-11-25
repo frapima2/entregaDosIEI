@@ -5,6 +5,7 @@ import java.util.List;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.scene.control.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -21,29 +22,47 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 
 public class Controller {
 
     @FXML
-    ComboBox comboBox;
+    private TableView<Producto> resultados;
+    @FXML
+    private TableColumn<Producto, String> c_marca;
+    @FXML
+    private TableColumn<Producto, String> c_modelo;
+    @FXML
+    private TableColumn<Producto, String> c_precio;
+    @FXML
+    private TableColumn<Producto, String> c_web;
+
+
 
     @FXML
-    Button buscar, cerrar;
+    private ComboBox comboBox;
 
     @FXML
-    RadioButton pc, fnac;
+    private Button buscar, cerrar;
+
+    @FXML
+    private CheckBox pc, fn;
 
     String marca;
-    String valor;
+    ToggleGroup group = new ToggleGroup();
 
+    public void llenarTabla(){
+        c_marca.setCellValueFactory(param -> new
+                ReadOnlyObjectWrapper<>(param.getValue().getMarca()));
+        c_modelo.setCellValueFactory(param -> new
+                ReadOnlyObjectWrapper<>(param.getValue().getModelo()));
+        c_precio.setCellValueFactory(param -> new
+                ReadOnlyObjectWrapper<>(param.getValue().getPrecio()));
+        c_web.setCellValueFactory(param -> new
+                ReadOnlyObjectWrapper<>(param.getValue().getWeb()));
+    }
 
     public void rellenarCb(){
         ObservableList<String> options =
@@ -53,97 +72,75 @@ public class Controller {
                         "Leonovo",
                         "LG",
                         "Motorola",
-                        "One Plus",
+                        "OnePlus",
                         "Samsung",
                         "Sony"
                 );
 
         comboBox.setItems(options);
+
     }
 
     public void buscar(){
+        if(pc.isSelected()){buscarPc(); System.out.println("Hecho");}
+        //if(fn.isSelected()){ buscarFn();System.out.println("Hecho");}
 
-        marca = comboBox.getValue().toString();
-        switch(marca){
-            case "Apple":
-                break;
-            case "Huawei":
-                break;
-            case "Leonovo":
-                break;
-            case "LG": valor = "//*[@id='acc-fil-0']/div/ul/li[2]/a";
-                break;
-            case "Motorola":
-                break;
-            case "One Plus":
-                break;
-            case "Samsung":
-                break;
-            case "Sony":
-                break;
-        }
+    }
 
+    public void buscarPc(){
+        String web = "PCComponentes";
         String exePath = "C:\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", exePath);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         WebDriver driver = new ChromeDriver(options);
-        driver.get("http://www.pccomponentes.com");
-        //driver.quit();
 
-        // Paso 1 introducir la cadena de búsqueda
-        String searchText="Móviles\n";
-        WebElement searchInputBox=driver.findElement(By.name("query"));
-        searchInputBox.sendKeys(searchText);
-        System.out.println("Paso 1 pasado");
+        marca = comboBox.getValue().toString();
+        switch(marca){
+            case "Apple":  driver.get("http://www.pccomponentes.com/iphone");
+                break;
+            case "Huawei": driver.get("http://www.pccomponentes.com/smartphone-moviles-huawei");
+                break;
+            case "Leonovo": driver.get("http://www.pccomponentes.com/smartphone-moviles/lenovo");
+                break;
+            case "LG": driver.get("http://www.pccomponentes.com/smartphone-moviles-lg");
+                break;
+            case "Motorola": driver.get("http://www.pccomponentes.com/movil-motorola");
+                break;
+            case "OnePlus": driver.get("http://www.pccomponentes.com/smartphone-moviles/oneplus");
+                break;
+            case "Samsung": driver.get("http://www.pccomponentes.com/smartphone-moviles-samsung");
+                break;
+            case "Sony": driver.get("http://www.pccomponentes.com/sony-xperia");
+                break;
+            default: return;
+        }
 
-        // Paso 2 esperar a los resultados de búsqueda
-        WebDriverWait waiting = new WebDriverWait(driver, 10);
-        waiting.until( ExpectedConditions.presenceOfElementLocated(By.id("resultados-busqueda") ) );
-        System.out.println("Paso 2 pasado");
 
-        // Paso 3 buscar el elemento ver más
-        WebElement elementoMas = driver.findElement(By.xpath("//*[@id='filterMenuLateral']/div/div/div[17]/a/b"));
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,100)", "");
-        elementoMas.click();
-        System.out.println("Paso 3 pasado");
+        //Paso 4 Cerrar la ventana de cookies
+        driver.findElement(By.xpath("//*[@id=\'familia-secundaria\']/div[5]/div/div/div[2]/button")).click();
+        System.out.println("Popup Cookies cerrado");
 
-        // Paso 4 Cerrar la ventana de cookies
-        driver.findElement(By.xpath("//*[@id='resultados-busqueda']/div[5]/div/div/div[2]/button")).click();
-        System.out.println("Paso 4 pasado");
-
-        // Paso 5 esperar a que salga el radio botón de LG y hacer scroll
-        jse.executeScript("window.scrollBy(0,100)", "");
-        waiting = new WebDriverWait(driver, 10);
-        waiting.until( ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='acc-fil-0']/div/ul/li[2]/a")));
-        WebElement element = driver.findElement(By.xpath("//a[@data-id='3']"));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element);
-        actions.perform();
-        jse = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,100)", "");
-        System.out.println("Paso 5 pasado");
-
-        // Paso 6 pulsar sobre el radio botón de los teléfonos LG
-        element.click();
-        System.out.println("Paso 6 pasado");
-
-        // Paso 7 esperar a que muestre los telefonos LG
-			/*waiting = new WebDriverWait(driver, 10);
-			waiting.until(ExpectedConditions.presenceOfElementLocated(By.className("GTM-productClick enlace-superpuesto")));*/
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println("Paso 7 pasado");
 
         // Paso 8 Obtener todos los elementos que aparecen en la primera página
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        Actions actions = new Actions(driver);
         WebElement mas = driver.findElement(By.xpath("//*[@id='btnMore']"));
+        actions.moveToElement(mas);
+        WebElement cerrar_sub = driver.findElement(By.xpath("//*[@id=\'chicago-body\']/a"));
 
         while(mas.isDisplayed()){
+            if(cerrar_sub.isDisplayed()){
+                actions.moveToElement(cerrar_sub);
+                actions.perform();
+                cerrar_sub.click();
+            }
             actions.moveToElement(mas);
             actions.perform();
             jse.executeScript("window.scrollBy(0,100)", "");
@@ -160,19 +157,27 @@ public class Controller {
                 driver.findElements(By.xpath("//*[contains(@class,'GTM-productClick enlace-superpuesto')]"));
         System.out.println("Resultados " + resultados2.size());
         System.out.println("Paso 8 pasado");
+        String modelo;
+        String precio;
 
         // Paso 9 Iterar sobre la lista para obtener las características de los artículos
         WebElement actual_Elemento, navegacion2;
         for (int i=0; i< resultados2.size(); i++) {
             actual_Elemento = resultados2.get(i); // elemento actual de la lista.
             System.out.println("Elemento: " + i);
+            modelo = actual_Elemento.getAttribute("data-name").toString();
+            precio = actual_Elemento.getAttribute("data-price").toString();
             System.out.println("Nombre: " + actual_Elemento.getAttribute("data-name").toString());
             System.out.println("Precio: " + actual_Elemento.getAttribute("data-price").toString() );
-            // si está disponible o no, se busca en tarjeta-articulo__elementos-adicionales
-            //navegacion2 = actual_Elemento.findElement(By.className("tarjeta-articulo__elementos-adicionales"));
-            //System.out.println("Por navegación 2 " + navegacion2.getText()); // el texto indica si está disponible o no
+            resultados.getItems().add(new Producto(marca,modelo,precio,web));
             System.out.println("-------------------------------------------");
         }
-        System.out.println("Paso 9 pasado");
+
+        llenarTabla();
+        driver.quit();
+    }
+
+    public void buscarFn(){
+
     }
 }

@@ -9,6 +9,23 @@ package sample;
         import java.util.List;
         import javafx.scene.layout.Pane;
 
+        import org.openqa.selenium.By;
+        import org.openqa.selenium.JavascriptExecutor;
+        import org.openqa.selenium.WebDriver;
+        import org.openqa.selenium.WebElement;
+        import org.openqa.selenium.chrome.ChromeDriver;
+        import org.openqa.selenium.chrome.ChromeOptions;
+        import org.openqa.selenium.interactions.Actions;
+        import org.openqa.selenium.support.ui.ExpectedConditions;
+        import org.openqa.selenium.support.ui.WebDriverWait;
+
+        import javafx.application.Application;
+        import javafx.fxml.FXMLLoader;
+        import javafx.stage.Stage;
+        import javafx.scene.Scene;
+        import javafx.scene.layout.Pane;
+
+
 public class Main extends Application {
 
     @Override
@@ -16,7 +33,7 @@ public class Main extends Application {
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Pane menu = (Pane)FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Buscar Telefonos");
-        primaryStage.setScene(new Scene(menu, 500, 240));
+        primaryStage.setScene(new Scene(menu, 612, 513));
         primaryStage.show();
     }
 
@@ -25,7 +42,7 @@ public class Main extends Application {
         launch(args);
     }
     public void fnac(){
-        String exePath = "C:\\Users\\Javi\\Desktop\\chromedriver.exe";
+        String exePath = "C:\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", exePath);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
