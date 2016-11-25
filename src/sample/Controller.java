@@ -91,7 +91,7 @@ public class Controller {
     public void buscar(){
         vaciar();
         if(pc.isSelected()){buscarPc(); System.out.println("Hecho");}
-        //if(fn.isSelected()){ buscarFn();System.out.println("Hecho");}
+        if(fn.isSelected()){buscarFn();System.out.println("Hecho");}
 
     }
 
@@ -181,6 +181,9 @@ public class Controller {
         driver.quit();
     }
 
+    String nombre;
+    String precio;
+
     public void buscarFn(){
         marca = comboBox.getValue().toString();
         String web = "Fnac";
@@ -190,16 +193,50 @@ public class Controller {
         options.addArguments("--start-maximized");
         WebDriver driver = new ChromeDriver(options);
 
-        WebElement aux = driver.findElement(By.xpath("//a[@href='http://www.fnac.es/telefono-MP3-GPS#bl=MMSmartphone']/a"));
+        driver.get("http://www.fnac.es");
+
+        WebElement aux = driver.findElement(By.xpath("/html/body/div[3]/div/div[1]/div/div[8]/a"));
         aux.click();
-        aux = driver.findElement(By.xpath("//a[@href='http://www.fnac.es/telefono-MP3-GPS/Smartphones-Libres/s39887']/a"));
-        aux.click();
-        aux = driver.findElement(By.xpath("//a[@href='http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-LG/n39894']/a"));
+        aux = driver.findElement(By.xpath("/html/body/div[3]/div/div[1]/div[2]/dl[2]/dd[1]/a"));
         aux.click();
 
+        switch(marca){
+            case "Apple":  driver.get("http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-Apple/n39890");
+                break;
+            case "Huawei": driver.get("http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-Huawei/n39896");
+                break;
+            case "Leonovo": driver.get("http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-Lenovo-Motorola/n40116");
+                break;
+            case "LG": driver.get("http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-LG/n39894");
+                break;
+            case "Motorola": driver.get("http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-Lenovo-Motorola/n40116");
+                break;
+            case "OnePlus": driver.get("http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-Sony/n39895");
+                break;
+            case "Samsung": driver.get("http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-Samsung/n39889");
+                break;
+            case "Sony": driver.get("http://busqueda.tv-informatica-telefonia-foto.fnac.es/Smartphones-Libres/Smartphones-Sony/n39895");
+                break;
+            default: return;
+        }
+
         WebElement next = driver.findElement(By.xpath("/html/body/div[4]/div/div[3]/div[2]/span[2]/ul/li[3]/a"));
-        ArrayList<WebElement> elementos = (ArrayList<WebElement>) driver.findElements(By.className("Article-item"));
+        List<WebElement> elementos = driver.findElements(By.className("Article-itemGroup"));
+
+        for(int i=0; i<elementos.size(); i++){
+            try{
+                nombre = elementos.get(i).findElement(By.xpath(".//*[@class='Article-desc']/a")).getText();
+                precio = elementos.get(i).findElement(By.xpath(".//div[3]/div/div[2]/div/div[1]/a")).getText();
+                System.out.println(nombre + "-" + precio);
+                resultados.getItems().add(new Producto(marca, nombre, precio, web));
+            }
+            catch(Exception e){
+
+            }
+        }
+
         while(next.isDisplayed()){
+
             next.click();
             try{
                 waitForAjax(driver);
@@ -207,22 +244,23 @@ public class Controller {
             catch (InterruptedException i){
                 System.out.print("ERROR DE CONEXION");
             }
-            elementos.addAll(driver.findElements(By.className("Article-item")));
+
+            elementos = driver.findElements(By.className("Article-itemGroup"));
+            for(int i=0; i<elementos.size(); i++){
+                try{
+                    nombre = elementos.get(i).findElement(By.xpath(".//*[@class='Article-desc']/a")).getText();
+                    precio = elementos.get(i).findElement(By.xpath(".//div[3]/div/div[2]/div/div[1]/a")).getText();
+                    System.out.println(nombre + "-" + precio);
+                    resultados.getItems().add(new Producto(marca, nombre, precio, web));
+                }
+                catch(Exception e){
+
+                }
+            }
         }
-
-        String nombre;
-        String precio;
-
-        for(int i=0; i<elementos.size(); i++){
-            nombre = elementos.get(i).findElement(By.xpath(".//div[1]/div[2]/div[1]/p[1]/a[1]")).getText();
-            precio = elementos.get(i).findElement(By.xpath(".//div[1]/div[3]/div[1]/div[2]/div[1]/div[1]/a[1]")).getText() + elementos.get(i).findElement(By.xpath(".//div[1]/div[3]/div[1]/div[2]/div[1]/div[1]/a[1]/sup[1]")).getText();
-            resultados.getItems().add(new Producto(marca, nombre, precio, web));
-        }
-
         driver.quit();
 
         llenarTabla();
-
 
     }
 

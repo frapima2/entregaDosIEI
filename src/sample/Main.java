@@ -31,7 +31,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        Pane menu = (Pane)FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Pane menu = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Buscar Telefonos");
         primaryStage.setScene(new Scene(menu, 612, 513));
         primaryStage.show();

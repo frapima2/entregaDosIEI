@@ -12,7 +12,6 @@
       <Label layoutX="14.0" layoutY="56.0" text="Buscar en" />
       <ComboBox fx:id="comboBox" layoutX="126.0" layoutY="14.0" onShown="#rellenarCb" prefHeight="25.0" prefWidth="161.0" promptText="seleccione una marca" />
       <Button fx:id="buscar" layoutX="355.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#buscar" text="Buscar" />
-      <Button fx:id="cerrar" layoutX="553.0" layoutY="474.0" mnemonicParsing="false" text="Cerrar" />
       <TableView fx:id="resultados" layoutX="15.0" layoutY="123.0" prefHeight="339.0" prefWidth="585.0">
         <columns>
           <TableColumn fx:id="c_marca" prefWidth="98.0" text="Marca" />
@@ -22,6 +21,6 @@
         </columns>
       </TableView>
       <CheckBox fx:id="pc" layoutX="126.0" layoutY="56.0" mnemonicParsing="false" text="PCComponentes" />
-      <CheckBox fx:id="fnac" layoutX="126.0" layoutY="89.0" mnemonicParsing="false" text="Fnac" />
+      <CheckBox fx:id="fn" layoutX="126.0" layoutY="89.0" mnemonicParsing="false" text="Fnac" />
    </children>
 </Pane>
