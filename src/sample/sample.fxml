@@ -16,9 +16,9 @@
       <TableView fx:id="resultados" layoutX="15.0" layoutY="123.0" prefHeight="339.0" prefWidth="585.0">
         <columns>
           <TableColumn fx:id="c_marca" prefWidth="98.0" text="Marca" />
-          <TableColumn fx:id="c_modelo" prefWidth="338.0" text="Modelo" />
-            <TableColumn fx:id="c_precio" minWidth="0.0" prefWidth="48.0" text="Precio" />
-            <TableColumn fx:id="c_web" prefWidth="100.0" text="Web" />
+          <TableColumn fx:id="c_modelo" prefWidth="321.0" text="Modelo" />
+            <TableColumn fx:id="c_precio" minWidth="0.0" prefWidth="42.0" text="Precio" />
+            <TableColumn fx:id="c_web" prefWidth="123.0" text="Web" />
         </columns>
       </TableView>
       <CheckBox fx:id="pc" layoutX="126.0" layoutY="56.0" mnemonicParsing="false" text="PCComponentes" />
